@@ -13,17 +13,19 @@ terraform {
 
 resource "aws_s3_bucket" "my_bucket" {
   bucket = var.bucket_name
-  # ✅ Allow public policy to be set
-  public_access_block_configuration {
-    block_public_acls       = false
-    block_public_policy     = false
-    ignore_public_acls      = false
-    restrict_public_buckets = false
-  }
   tags = {
     Environment = "Dev"
     Owner       = "Barath"
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "my_bucket_block" {
+  bucket = aws_s3_bucket.my_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {
