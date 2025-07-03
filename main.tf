@@ -65,18 +65,10 @@ resource "aws_s3_bucket_policy" "public_read" {
         Sid       = "PublicReadGetObject",
         Effect    = "Allow",
         Principal = "*",
-        Action    = "s3:GetObject",
+        Action    = "s3:GetObject","s3:GetBucketPolicy"
         Resource  = "${aws_s3_bucket.my_bucket.arn}/*"
       }
     ]
   })
-}
-
-resource "aws_s3_bucket_public_access_block" "allow_public" {
-  bucket = aws_s3_bucket.my_bucket.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+   depends_on = [aws_s3_bucket_public_access_block.my_bucket_block]
 }
