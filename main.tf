@@ -20,7 +20,6 @@ resource "aws_s3_bucket" "my_bucket" {
     ignore_public_acls      = false
     restrict_public_buckets = false
   }
-}
   tags = {
     Environment = "Dev"
     Owner       = "Barath"
